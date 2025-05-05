@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <!-- Inserisco frammento meta tags -->
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+    <title>Lista trade</title>
+  </head>
+  <body>
+    <!-- Inserisco frammento navbar -->
+    <div th:replace="~{fragments/navbar :: NavBar}"></div>
+
+    <div class="container mt-4">
+      <h2>Lista dei trade di <span th:text="${username}">Utente</span></h2>
+
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Strumento</th>
+            <th>Tipo</th>
+            <th>Size</th>
+            <th>Prezzo Entrata</th>
+            <th>Prezzo Uscita</th>
+            <th>Data Entrata</th>
+            <th>Data Uscita</th>
+            <th>Profit/Loss</th>
+            <th>Strategie</th>
+            <th>Account</th>
+            <th>Note</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="trade : ${trades}">
+            <td th:text="${trade.id}">1</td>
+            <td th:text="${trade.instrument}">AAPL</td>
+            <td th:text="${trade.tradeType}">LONG</td>
+            <td th:text="${trade.size}">1.00</td>
+            <td th:text="${trade.entryPrice}">150.00</td>
+            <td th:text="${trade.exitPrice}">155.00</td>
+            <td th:text="${trade.entryDate}">2024-05-01</td>
+            <td th:text="${trade.exitDate}">2024-05-03</td>
+            <td th:text="${trade.profitLoss}">500.00</td>
+            <td>
+              <ul>
+                <li
+                  th:each="strategy : ${trade.strategies}"
+                  th:text="${strategy.name}"
+                >
+                  Breakout
+                </li>
+              </ul>
+            </td>
+            <td th:text="${trade.account.name}">Account1</td>
+            <td th:text="${trade.notes}">Note sul trade</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Inserisco frammento script risorse -->
+    <div th:replace="~{fragments/resources :: bodyScripts}"></div>
+  </body>
+</html>

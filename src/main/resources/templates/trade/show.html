@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+  <title th:text="'Dettagli Trade #' + ${trade.id}">Dettagli Trade</title>
+</head>
+<body>
+  <div th:replace="~{fragments/navbar :: NavBar}"></div>
+
+  <div class="container mt-5">
+    <h2 th:text="'Dettagli del Trade #' + ${trade.id}">Dettagli Trade</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">Strumento</dt>
+          <dd class="col-sm-8" th:text="${trade.instrument}">AAPL</dd>
+
+          <dt class="col-sm-4">Tipo</dt>
+          <dd class="col-sm-8" th:text="${trade.tradeType}">LONG</dd>
+
+          <dt class="col-sm-4">Size</dt>
+          <dd class="col-sm-8" th:text="${trade.size}">1.00</dd>
+
+          <dt class="col-sm-4">Prezzo Entrata</dt>
+          <dd class="col-sm-8" th:text="${trade.entryPrice}">150.00</dd>
+
+          <dt class="col-sm-4">Prezzo Uscita</dt>
+          <dd class="col-sm-8" th:text="${trade.exitPrice}">155.00</dd>
+
+          <dt class="col-sm-4">Profit/Loss</dt>
+          <dd class="col-sm-8" th:text="${trade.profitLoss}">5.00</dd>
+        </dl>
+      </div>
+
+      <div class="col-md-6">
+        <dl class="row">
+          <dt class="col-sm-4">Data Entrata</dt>
+          <dd class="col-sm-8" th:text="${trade.entryDate}">2025-05-01</dd>
+
+          <dt class="col-sm-4">Data Uscita</dt>
+          <dd class="col-sm-8" th:text="${trade.exitDate}">2025-05-03</dd>
+
+          <dt class="col-sm-4">Account</dt>
+          <dd class="col-sm-8" th:text="${trade.account.name}">Main Account</dd>
+
+          <dt class="col-sm-4">Strategie</dt>
+          <dd class="col-sm-8">
+            <ul class="mb-0">
+              <li th:each="strategy : ${trade.strategies}" th:text="${strategy.name}">Breakout</li>
+            </ul>
+          </dd>
+
+          <dt class="col-sm-4">Note</dt>
+          <dd class="col-sm-8" th:text="${trade.notes}">Trade interessante...</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <a th:href="@{/trades}" class="btn btn-secondary">Torna alla lista</a>
+      <a th:href="@{/trades/edit/{id}(id=${trade.id})}" class="btn btn-primary">Modifica</a>
+    </div>
+  </div>
+
+  <div th:replace="~{fragments/resources :: bodyScripts}"></div>
+</body>
+</html>
