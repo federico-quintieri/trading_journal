@@ -70,12 +70,14 @@
       <div class="mt-4">
         <a th:href="@{/trades}" class="btn btn-secondary">Torna alla lista</a>
         <a
+          sec:authorize="hasAuthority('ROLE_ADMIN')"
           th:href="@{/trades/edit/{id}(id=${trade.id})}"
           class="btn btn-primary"
           >Modifica</a
         >
         <!-- Bottone per aprire il modal -->
         <button
+          sec:authorize="hasAuthority('ROLE_ADMIN')"
           type="button"
           class="btn btn-danger"
           data-bs-toggle="modal"

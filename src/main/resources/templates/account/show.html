@@ -24,34 +24,80 @@
 
       <div class="mb-3">
         <strong>Saldo iniziale:</strong>
-        <span th:text="${#numbers.formatDecimal(account.initialBalance, 1, 'COMMA', 2, 'POINT')}">0.00</span>
+        <span
+          th:text="${#numbers.formatDecimal(account.initialBalance, 1, 'COMMA', 2, 'POINT')}"
+          >0.00</span
+        >
       </div>
 
       <div class="mb-4">
         <h4>Trades associati:</h4>
         <ul class="list-group">
-          <li class="list-group-item" th:each="trade : ${account.trades}" th:text="'Trade #' + ${trade.id}">Trade</li>
+          <li
+            class="list-group-item"
+            th:each="trade : ${account.trades}"
+            th:text="'Trade #' + ${trade.id}"
+          >
+            Trade
+          </li>
         </ul>
       </div>
 
       <a th:href="@{/accounts}" class="btn btn-secondary">Torna alla lista</a>
-      <a th:href="@{/accounts/edit/{id}(id=${account.id})}" class="btn btn-warning">Modifica</a>
-      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Cancella</button>
+      <a
+        sec:authorize="hasAuthority('ROLE_ADMIN')"
+        th:href="@{/accounts/edit/{id}(id=${account.id})}"
+        class="btn btn-warning"
+        >Modifica</a
+      >
+      <button
+        sec:authorize="hasAuthority('ROLE_ADMIN')"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal"
+      >
+        Cancella
+      </button>
     </div>
 
     <!-- Modal Conferma Eliminazione -->
-    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="confirmDeleteModal"
+      tabindex="-1"
+      aria-labelledby="confirmDeleteLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
-          <form th:action="@{/accounts/delete/{id}(id=${account.id})}" method="post">
+          <form
+            th:action="@{/accounts/delete/{id}(id=${account.id})}"
+            method="post"
+          >
             <div class="modal-header">
-              <h5 class="modal-title" id="confirmDeleteLabel">Conferma Cancellazione</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              <h5 class="modal-title" id="confirmDeleteLabel">
+                Conferma Cancellazione
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
             </div>
-            <div class="modal-body">Sei sicuro di voler cancellare questo account?</div>
+            <div class="modal-body">
+              Sei sicuro di voler cancellare questo account?
+            </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-              <button type="submit" class="btn btn-danger">Conferma Cancella</button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Annulla
+              </button>
+              <button type="submit" class="btn btn-danger">
+                Conferma Cancella
+              </button>
             </div>
           </form>
         </div>

@@ -19,7 +19,12 @@ public class SecurityConfiguration {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers("/trades/create", "/trades/edit/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/strategies/create", "/strategies/edit/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/accounts/create", "/accounts/edit/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers(HttpMethod.POST, "/trades/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/accounts/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/strategies/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers("/trades", "trades/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
                 .requestMatchers("/**").permitAll()
                 .and().formLogin().defaultSuccessUrl("/trades", true)
                 .and().logout()
