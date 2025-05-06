@@ -18,8 +18,10 @@ public class SecurityConfiguration {
     @SuppressWarnings("removal")
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
+                .requestMatchers("/trades/create", "/trades/edit/**").hasAuthority("ROLE_ADMIN")
+                .requestMatchers(HttpMethod.POST, "/trades/**").hasAuthority("ROLE_ADMIN")
                 .requestMatchers("/**").permitAll()
-                .and().formLogin()
+                .and().formLogin().defaultSuccessUrl("/trades", true)
                 .and().logout()
                 .and().exceptionHandling();
 

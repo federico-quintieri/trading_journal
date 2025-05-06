@@ -9,9 +9,12 @@
     <!-- Inserisco frammento navbar -->
     <div th:replace="~{fragments/navbar :: NavBar}"></div>
 
-    <div class="container mt-4">
+    <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
       <h2>Lista dei trade di <span th:text="${username}">Utente</span></h2>
-
+      <a class="btn btn-primary" th:href="@{/trades/create}">Crea nuovo trade</a>
+    </div>
+    
       <table class="table table-striped mt-3">
         <thead>
           <tr>
@@ -24,7 +27,6 @@
             <th>Data Entrata</th>
             <th>Data Uscita</th>
             <th>Profit/Loss</th>
-            <th>Strategie</th>
             <th>Account</th>
             <th>Note</th>
           </tr>
@@ -40,23 +42,14 @@
             <td th:text="${trade.entryDate}">2024-05-01</td>
             <td th:text="${trade.exitDate}">2024-05-03</td>
             <td th:text="${trade.profitLoss}">500.00</td>
-            <td>
-              <ul>
-                <li
-                  th:each="strategy : ${trade.strategies}"
-                  th:text="${strategy.name}"
-                >
-                  Breakout
-                </li>
-              </ul>
-            </td>
             <td th:text="${trade.account.name}">Account1</td>
             <td th:text="${trade.notes}">Note sul trade</td>
+            <td><a class="btn btn-info" th:href="@{/trades/{id}(id=${trade.id})}">Info</a></td>
           </tr>
         </tbody>
       </table>
     </div>
-
+  
     <!-- Inserisco frammento script risorse -->
     <div th:replace="~{fragments/resources :: bodyScripts}"></div>
   </body>
