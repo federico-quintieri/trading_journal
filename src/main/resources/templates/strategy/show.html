@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+    <title>Dettaglio Strategia</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: NavBar}"></div>
+
+    <div class="container mt-5">
+      <h1 th:text="${strategy.name}" class="mb-4">Nome Strategia</h1>
+
+      <div class="mb-3">
+        <strong>ID:</strong>
+        <span th:text="${strategy.id}">1</span>
+      </div>
+
+      <div class="mb-3">
+        <strong>Descrizione:</strong>
+        <p th:text="${strategy.description}">Descrizione</p>
+      </div>
+
+      <div class="mb-4">
+        <h4>Trades associati:</h4>
+        <ul class="list-group">
+          <li
+            class="list-group-item"
+            th:each="trade : ${strategy.trades}"
+            th:text="'Trade #' + ${trade.id}"
+          >
+            Trade ID
+          </li>
+        </ul>
+      </div>
+
+      <a href="/strategies" class="btn btn-secondary">Torna alla lista</a>
+      <a
+        class="btn btn-warning"
+        th:href="@{/strategies/edit/{id}(id=${strategy.id})}"
+        >Modifica</a
+      >
+      <!-- Bottone per aprire il modal -->
+      <button
+        type="button"
+        class="btn btn-danger"
+        data-bs-toggle="modal"
+        data-bs-target="#confirmDeleteModal"
+      >
+        Cancella
+      </button>
+    </div>
+    <!-- Modal di conferma -->
+    <div
+      class="modal fade"
+      id="confirmDeleteModal"
+      tabindex="-1"
+      aria-labelledby="confirmDeleteLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form
+            th:action="@{/strategies/delete/{id}(id=${strategy.id})}"
+            method="post"
+          >
+            <div class="modal-header">
+              <h5 class="modal-title" id="confirmDeleteLabel">
+                Conferma Cancellazione
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Chiudi"
+              ></button>
+            </div>
+            <div class="modal-body">
+              Sei sicuro di voler cancellare questa strategia
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Annulla
+              </button>
+              <button type="submit" class="btn btn-danger">
+                Conferma Cancella
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{fragments/resources :: bodyScripts}"></div>
+  </body>
+</html>
