@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{fragments/resources :: headTags}"></th:block>
+    <title th:text="${edit} ? 'Modifica account' : 'Aggiungi nuovo account'">Nuovo Account</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: NavBar}"></div>
+
+    <form th:action="${edit} ? @{|/accounts/edit/${account.id}|} : @{/accounts/create}"
+          th:object="${account}" method="post"
+          class="container p-4 shadow-lg rounded bg-light mt-5">
+
+      <h2 class="text-center mb-4" th:text="${edit} ? 'Modifica account' : 'Aggiungi nuovo account'">Nuovo Account</h2>
+
+      <div class="mb-3" th:if="${errors != null}">
+        <div class="alert alert-danger">
+          <strong>Ci sono errori nel form:</strong>
+          <ul class="mb-0 ps-4">
+            <li th:each="err : ${errors}" th:text="${err.defaultMessage}"></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome Account</label>
+        <input type="text" class="form-control" id="name" th:field="*{name}" maxlength="100" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="broker" class="form-label">Broker</label>
+        <input type="text" class="form-control" id="broker" th:field="*{broker}" maxlength="100" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="currency" class="form-label">Valuta (es. EUR, USD)</label>
+        <input type="text" class="form-control" id="currency" th:field="*{currency}" maxlength="3" required />
+      </div>
+
+      <div class="mb-3">
+        <label for="initialBalance" class="form-label">Saldo iniziale</label>
+        <input type="number" class="form-control" id="initialBalance" th:field="*{initialBalance}" min="0.01" step="0.01" required />
+      </div>
+
+      <div class="mb-3 d-flex justify-content-center gap-3">
+        <a th:href="@{/accounts}" class="btn btn-dark">Torna indietro</a>
+        <button type="submit" class="btn btn-success">
+          <span th:text="${edit} ? 'Modifica account' : 'Aggiungi account'"></span>
+        </button>
+      </div>
+    </form>
+
+    <div th:replace="~{fragments/resources :: bodyScripts}"></div>
+  </body>
+</html>
