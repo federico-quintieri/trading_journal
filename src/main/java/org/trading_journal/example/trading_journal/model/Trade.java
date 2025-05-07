@@ -7,6 +7,9 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 import org.trading_journal.example.trading_journal.Enum.tradeType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -74,6 +77,7 @@ public class Trade {
     // associata a più trade
     @ManyToMany
     @JoinTable(name = "strategy_trade", joinColumns = @JoinColumn(name = "trade_id"), inverseJoinColumns = @JoinColumn(name = "strategy_id"))
+    @JsonIgnore
     private List<Strategy> strategies;
 
     // Relazione many to one con account
@@ -82,6 +86,7 @@ public class Trade {
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     @NotNull(message = "L'account associato è obbligatorio.")
+    @JsonBackReference
     private Account account;
 
     // --- Genero i getters e i setters ---\\

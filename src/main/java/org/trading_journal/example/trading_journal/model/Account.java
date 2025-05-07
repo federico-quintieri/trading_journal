@@ -5,6 +5,8 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -35,6 +37,7 @@ public class Account {
     // Un account può avere più trade e un Trade deve avere per forza un account
     // associato
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonBackReference
     private List<Trade> trades;
 
     // --- Genero i getters e i setters ---\\
