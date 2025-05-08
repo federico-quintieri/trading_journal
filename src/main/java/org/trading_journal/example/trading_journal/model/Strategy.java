@@ -2,6 +2,7 @@ package org.trading_journal.example.trading_journal.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -35,7 +36,7 @@ public class Strategy {
     // Relazione Many to Many con trades
     // Una strategia può essere associata a più trade
     @ManyToMany(mappedBy = "strategies")
-    @JsonIgnore
+    @JsonBackReference
     private List<Trade> trades;
 
     // --- Genero i getters e i setters ---\\
