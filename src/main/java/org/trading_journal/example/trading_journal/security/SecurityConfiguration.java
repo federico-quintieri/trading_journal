@@ -14,6 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
 
+    // Chi può accedere a cosa
     @Bean
     @SuppressWarnings("removal")
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -28,17 +29,24 @@ public class SecurityConfiguration {
                 .requestMatchers("/**").permitAll()
                 .and().formLogin().defaultSuccessUrl("/trades", true)
                 .and().logout()
-                .and().exceptionHandling()
-                .and().csrf().disable();
+                .and().exceptionHandling();
 
         return http.build();
     }
 
+    // Prende l'utente
+    @Bean
+    DatabaseUserDetailService userDetailService() {
+        return new DatabaseUserDetailService();
+    }
+
+    // Decodifica la password
     @Bean
     PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    // Utilizza i due precedenti
     @Bean
     DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -49,8 +57,4 @@ public class SecurityConfiguration {
         return authProvider;
     }
 
-    @Bean
-    DatabaseUserDetailService userDetailService() {
-        return new DatabaseUserDetailService();
-    }
 }

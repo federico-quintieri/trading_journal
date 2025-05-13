@@ -19,8 +19,6 @@ import org.trading_journal.example.trading_journal.service.TradeService;
 
 import jakarta.validation.Valid;
 
-import org.springframework.security.core.Authentication;
-
 @Controller
 @RequestMapping("/trades")
 public class TradeController {
@@ -38,10 +36,9 @@ public class TradeController {
 
     // Endpoint chiamata Index
     @GetMapping
-    public String index(Authentication authentication, Model model) {
+    public String index(Model model) {
         List<Trade> trades = tradeService.findAllTrades();
         model.addAttribute("trades", trades);
-        model.addAttribute("username", authentication.getName());
         return "trade/index";
     }
 
@@ -112,7 +109,7 @@ public class TradeController {
     // Endpoint chiamata update put
     @PostMapping("/edit/{id}")
     public String postUpdate(@Valid @ModelAttribute("trade") Trade newTrade, BindingResult bindingResult,
-            @PathVariable Integer id, Model model) {
+            Model model) {
 
         if (bindingResult.hasErrors()) {
             // Se ci sono errori nel form passo tutti gli attributi necessari

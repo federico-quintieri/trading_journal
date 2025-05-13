@@ -7,8 +7,6 @@ import java.util.List;
 import org.hibernate.validator.constraints.Length;
 import org.trading_journal.example.trading_journal.Enum.tradeType;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
